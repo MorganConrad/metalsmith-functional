@@ -5,33 +5,23 @@
 [![Coverage Status](https://coveralls.io/repos/github/MorganConrad/metalsmith-functional/badge.svg)](https://coveralls.io/github/MorganConrad/metalsmith-functional)
 
 # metalsmith-functional
-Creates ("selects") a temporary subset of Metalsmith's filedata, on which you can use plugins.  Then call `done()` to return to normal flow with all files.  Useful if your plugins are very long, expensive, or conflicting.
 
 Inspired by [This feature request](https://github.com/segmentio/metalsmith/issues/287)
 
-**Warning**: If the plugins add or remove "files", **this wil not work**.  It does work if they modify existing files, metalsmith, etc...
-
-Functional Programmers might think of this as "`filter().forEach()`", but, unlike modules like [metalsmith-filter](https://www.npmjs.com/package/metalsmith-filter) it does not permanently change the original files object.
-
-Procedural Programmers could think of this as "`if/then/else`": for all files, if they pass the selection criteria, then use the plugins.
+Most metalsmith plugins directly modify the `files` object.  There is a growing trend towards "functional style" or immutable code, which **returns** a new version of the object instead of modifying it.  Until metalsmith supports this style, you can try using this plugin.
 
 ```
 const functional = require('metalsmith-functional');
   ...
-.use(functional(options))           // select a subset of files
+.use(functional(fn [,options]))
   
 ```
 
+### fn - your function, of the form `fn(files, metalsmith [,callback(err, results)])`
+ - return (or callback with) either an Object or an Array (see options.id)
+ - if there is an err `files` will remain unchanged
+
 ### options
 
-Due to the special nature of this plugin, Javascript only, no CLI. (???)  
-
-
-### Examples
-
-Only pass files with a field "usePrismJS" to metalsmith-prism
-
-```
-use(select({ usePrismJS: true })
-  .thenUse(metalsmithPrism())
-```
+ - options.retain   Do not delete existing key/value pairs in files.  (default = false)
+ - options.id       if fn returns an array, which key to use for the filename is files  
