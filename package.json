@@ -1,0 +1,30 @@
+{
+  "name": "metalsmith-functional",
+  "version": "0.1.0",
+  "description": "A metalsmith plugin to wrap a functional plugin",
+  "main": "functional.js",
+  "scripts": {
+    "test": "nyc --reporter=lcov tape test/test.js",
+    "coverage": "nyc --reporter=text-lcov report | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MorganConrad/metalsmith-functional.git"
+  },
+  "keywords": [
+    "metalsmith",
+    "plugin",
+    "functional"
+  ],
+  "devDependencies": {
+    "nyc": "^11.2.0",
+    "tape": "^4.6",
+    "coveralls": "^3.0"
+  },
+  "author": "Morgan Conrad <flyingspaniel@gmail.com> (http://flyingspaniel.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MorganConrad/metalsmith-functional/issues"
+  },
+  "homepage": "https://github.com/MorganConrad/metalsmith-functional#readme"
+}
